@@ -87,7 +87,7 @@ async def test_detect_language_empty():
     """Test language detection with empty text."""
     result = await detect_language("")
     assert len(result) == 1
-    assert "Error: Empty text" in result[0].text
+    assert "Error: Empty or whitespace-only text" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -104,7 +104,7 @@ async def test_normalize_malay_empty():
     """Test normalization with empty text."""
     result = await normalize_malay("")
     assert len(result) == 1
-    assert "Error: Empty text" in result[0].text
+    assert "Error: Empty or whitespace-only text" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -121,7 +121,7 @@ async def test_correct_spelling_empty():
     """Test spelling correction with empty text."""
     result = await correct_spelling("")
     assert len(result) == 1
-    assert "Error: Empty text" in result[0].text
+    assert "Error: Empty or whitespace-only text" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -138,7 +138,7 @@ async def test_apply_glossary_empty():
     """Test glossary lookup with empty term."""
     result = await apply_glossary("")
     assert len(result) == 1
-    assert "Error: Empty term" in result[0].text
+    assert "Error: Empty or whitespace-only term" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -155,7 +155,7 @@ async def test_rewrite_style_empty():
     """Test style rewriting with empty text."""
     result = await rewrite_style("", "formal")
     assert len(result) == 1
-    assert "Error: Empty text" in result[0].text
+    assert "Error: Empty or whitespace-only text" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -172,7 +172,7 @@ async def test_translate_empty():
     """Test translation with empty text."""
     result = await translate("", "ms", "en")
     assert len(result) == 1
-    assert "Error: Empty text" in result[0].text
+    assert "Error: Empty or whitespace-only text" in result[0].text
 
 
 @pytest.mark.asyncio
@@ -198,4 +198,4 @@ async def test_term_lookup_empty():
     """Test term lookup with empty term."""
     result = await term_lookup("")
     assert len(result) == 1
-    assert "Error: Empty term" in result[0].text
+    assert "Error: Empty or whitespace-only term" in result[0].text

@@ -252,7 +252,7 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
 async def detect_language(text: str) -> list[TextContent]:
     """Detect the language of the given text."""
     if not text.strip():
-        return [TextContent(type="text", text="Error: Empty text provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only text provided")]
     
     try:
         model = get_language_detection_model()
@@ -273,7 +273,7 @@ Input text: {text}"""
 async def normalize_malay(text: str) -> list[TextContent]:
     """Normalize Malay text to standard form."""
     if not text.strip():
-        return [TextContent(type="text", text="Error: Empty text provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only text provided")]
     
     try:
         normalizer = get_normalizer_model()
@@ -294,7 +294,7 @@ Normalized: {normalized}"""
 async def correct_spelling(text: str) -> list[TextContent]:
     """Correct spelling errors in Malay text."""
     if not text.strip():
-        return [TextContent(type="text", text="Error: Empty text provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only text provided")]
     
     try:
         corrector = get_spelling_corrector()
@@ -315,7 +315,7 @@ Corrected: {corrected}"""
 async def apply_glossary(term: str) -> list[TextContent]:
     """Look up a term in the Malay glossary."""
     if not term.strip():
-        return [TextContent(type="text", text="Error: Empty term provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only term provided")]
     
     try:
         # Use Malaya's built-in dictionary/vocabulary lookup if available
@@ -340,7 +340,7 @@ official dictionary API or similar resources."""
 async def rewrite_style(text: str, style: str = "formal") -> list[TextContent]:
     """Rewrite text in a different style."""
     if not text.strip():
-        return [TextContent(type="text", text="Error: Empty text provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only text provided")]
     
     try:
         paraphraser = get_paraphrase_model()
@@ -364,7 +364,7 @@ transformations (formal/casual), consider fine-tuning or prompt engineering."""
 async def translate(text: str, source_lang: str = "ms", target_lang: str = "en") -> list[TextContent]:
     """Translate text between Malay and English."""
     if not text.strip():
-        return [TextContent(type="text", text="Error: Empty text provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only text provided")]
     
     if source_lang == target_lang:
         return [TextContent(type="text", text="Error: Source and target languages must be different")]
@@ -389,7 +389,7 @@ Translation ({lang_names[target_lang]}): {translated}"""
 async def term_lookup(term: str) -> list[TextContent]:
     """Look up detailed linguistic information about a Malay term."""
     if not term.strip():
-        return [TextContent(type="text", text="Error: Empty term provided")]
+        return [TextContent(type="text", text="Error: Empty or whitespace-only term provided")]
     
     try:
         # Combine multiple analysis approaches

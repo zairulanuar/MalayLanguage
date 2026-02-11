@@ -5,7 +5,7 @@ description = "MCP server for Malay language processing using Malaya"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-    { name = "Zairul Anuar", email = "zairulanuar@example.com" }
+    { name = "Zairul Anuar" }
 ]
 license = { text = "MIT" }
 dependencies = [
