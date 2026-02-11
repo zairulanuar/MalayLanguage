@@ -2,7 +2,17 @@
 Tests for MalayLanguage MCP Server
 """
 import pytest
-from unittest.mock import Mock, patch, AsyncMock
+import sys
+from unittest.mock import Mock, patch, AsyncMock, MagicMock
+
+# Mock malaya module before importing server
+sys.modules['malaya'] = MagicMock()
+sys.modules['malaya.language_detection'] = MagicMock()
+sys.modules['malaya.normalize'] = MagicMock()
+sys.modules['malaya.spelling_correction'] = MagicMock()
+sys.modules['malaya.translation'] = MagicMock()
+sys.modules['malaya.paraphrase'] = MagicMock()
+
 from server import (
     detect_language,
     normalize_malay,
