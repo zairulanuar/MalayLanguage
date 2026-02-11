@@ -6,6 +6,7 @@ A Model Context Protocol (MCP) server for superb Malay language processing, powe
 
 **Want to use this without installing locally?** Deploy to the cloud in minutes:
 
+- 🆕 **Hugging Face Spaces**: [Deploy to HF Spaces](HF_SPACES_DEPLOYMENT.md) (Free, ML-optimized)
 - **Railway**: [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/malaylanguage)
 - **Render**: See [DEPLOYMENT.md](DEPLOYMENT.md#render)
 - **Fly.io**: See [DEPLOYMENT.md](DEPLOYMENT.md#flyio)
@@ -13,6 +14,7 @@ A Model Context Protocol (MCP) server for superb Malay language processing, powe
 
 👉 **5-minute quickstart**: [QUICKSTART.md](QUICKSTART.md)  
 👉 **Full deployment guide**: [DEPLOYMENT.md](DEPLOYMENT.md)  
+👉 **HF Spaces guide**: [HF_SPACES_DEPLOYMENT.md](HF_SPACES_DEPLOYMENT.md) 🆕  
 👉 **Testing guide**: [TESTING.md](TESTING.md)
 
 ## Features
@@ -41,6 +43,7 @@ Deploy the server to a cloud platform and connect via HTTP. **This is the recomm
 See the complete guide: **[DEPLOYMENT.md](DEPLOYMENT.md)**
 
 **Quick options:**
+- 🆕 **Hugging Face Spaces**: Free, ML-optimized hosting - [Guide](HF_SPACES_DEPLOYMENT.md)
 - **Railway**: One-click deploy, 500 hours free monthly
 - **Render**: Auto-deploy from GitHub, 750 hours free monthly  
 - **Fly.io**: Edge deployment, 3 VMs free
@@ -52,7 +55,7 @@ See the complete guide: **[DEPLOYMENT.md](DEPLOYMENT.md)**
   "mcpServers": {
     "malaylanguage": {
       "url": "https://your-deployed-app.com/sse",
-      "transport": "http"
+      "transport": "sse"
     }
   }
 }

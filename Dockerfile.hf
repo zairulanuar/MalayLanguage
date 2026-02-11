@@ -1,0 +1,46 @@
+# Hugging Face Spaces Optimized Dockerfile for MalayLanguage MCP Server
+# Based on HF Spaces best practices
+
+FROM python:3.11-slim
+
+# Create user with UID 1000 as required by HF Spaces
+RUN useradd -m -u 1000 user
+
+# Set working directory
+WORKDIR /home/user/app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and install Python dependencies
+COPY --chown=user:user requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy application files with correct ownership
+COPY --chown=user:user server.py .
+COPY --chown=user:user http_server.py .
+COPY --chown=user:user server.json .
+
+# Switch to non-root user
+USER user
+
+# Set environment variables
+ENV HOME=/home/user
+ENV PATH=/home/user/.local/bin:$PATH
+ENV PYTHONUNBUFFERED=1
+# Use /tmp for model cache as it's writable in HF Spaces
+ENV MALAYA_CACHE=/tmp/.malaya
+
+# Create cache directory
+RUN mkdir -p /tmp/.malaya
+
+# Expose HF Spaces default port
+EXPOSE 7860
+
+# Start the HTTP server on port 7860
+CMD ["python", "http_server.py", "0.0.0.0", "7860"]

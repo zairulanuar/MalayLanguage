@@ -19,7 +19,7 @@ This guide explains how to deploy and connect to the MalayLanguage MCP Server **
 
 The fastest way to use this MCP server remotely:
 
-1. **Deploy to a cloud platform** (Railway, Render, or Fly.io)
+1. **Deploy to a cloud platform** (Hugging Face Spaces, Railway, Render, or Fly.io)
 2. **Get your server URL** (e.g., `https://your-app.railway.app`)
 3. **Configure your MCP client** to use the HTTP endpoint
 
@@ -29,7 +29,62 @@ The fastest way to use this MCP server remotely:
 
 ### Cloud Platforms
 
-#### Railway (Recommended)
+#### Hugging Face Spaces (Free & Easy) 🆕
+
+Hugging Face Spaces offers free hosting with Docker support, perfect for ML/NLP applications.
+
+**Advantages:**
+- ✅ Free tier with generous limits
+- ✅ Built for ML workloads
+- ✅ Easy Docker deployment
+- ✅ Great for demos and personal use
+
+**Step 1: Create a Space**
+
+1. Go to [Hugging Face Spaces](https://huggingface.co/spaces)
+2. Click "Create new Space"
+3. Choose:
+   - **Space SDK**: Docker
+   - **Hardware**: CPU Basic (free)
+4. Click "Create Space"
+
+**Step 2: Deploy Files**
+
+See detailed guide: **[HF_SPACES_DEPLOYMENT.md](HF_SPACES_DEPLOYMENT.md)**
+
+Quick method - upload these files:
+- `README.md` (use `README_HF_SPACES.md` content)
+- `Dockerfile` (use `Dockerfile.hf` content)
+- `requirements.txt`
+- `server.py`, `http_server.py`, `server.json`
+
+**Step 3: Access Your Space**
+
+Your Space URL: `https://YOUR_USERNAME-malaylanguage-mcp.hf.space`
+
+**Step 4: Configure Your Client**
+
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://YOUR_USERNAME-malaylanguage-mcp.hf.space/sse",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+**Performance Notes:**
+- First request may take 30-90s (model download)
+- Free tier sleeps after 48h inactivity
+- Upgrade for always-on and better performance
+
+📖 **Full guide**: [HF_SPACES_DEPLOYMENT.md](HF_SPACES_DEPLOYMENT.md)
+
+---
+
+#### Railway (Recommended for Production)
 
 Railway provides automatic deployments from GitHub with zero configuration.
 
