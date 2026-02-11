@@ -274,7 +274,7 @@ Restart Claude Desktop.
 
 ### VS Code / Cursor
 
-Create or edit `.vscode/sse.json` in your project:
+Create or edit `.vscode/mcp.json` in your project:
 
 ```json
 {

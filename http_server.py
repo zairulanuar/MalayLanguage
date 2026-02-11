@@ -74,7 +74,7 @@ http_app = Starlette(routes=routes)
 def start_server(host: str = "0.0.0.0", port: int = 8000):
     """Start the HTTP server."""
     logger.info(f"Starting MalayLanguage MCP HTTP server on {host}:{port}")
-    logger.info(f"MCP endpoint available at http://{host}:{port}/mcp")
+    logger.info(f"MCP SSE endpoint available at http://{host}:{port}/sse")
     logger.info(f"Health check available at http://{host}:{port}/health")
     uvicorn.run(http_app, host=host, port=port)
 

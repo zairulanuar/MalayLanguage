@@ -2,27 +2,27 @@
   "mcpServers": {
     "malaylanguage-remote": {
       "url": "https://your-deployed-app.com/sse",
-      "transport": "http",
+      "transport": "sse",
       "description": "Remote MalayLanguage MCP Server - No local installation required"
     },
     "malaylanguage-railway": {
       "url": "https://malaylanguage-mcp-production.up.railway.app/sse",
-      "transport": "http",
+      "transport": "sse",
       "description": "Example: Railway deployment"
     },
     "malaylanguage-render": {
       "url": "https://malaylanguage-mcp.onrender.com/sse",
-      "transport": "http",
+      "transport": "sse",
       "description": "Example: Render deployment"
     },
     "malaylanguage-flyio": {
       "url": "https://malaylanguage-mcp.fly.dev/sse",
-      "transport": "http",
+      "transport": "sse",
       "description": "Example: Fly.io deployment"
     },
     "malaylanguage-local-http": {
       "url": "http://localhost:8000/sse",
-      "transport": "http",
+      "transport": "sse",
       "description": "Local HTTP server (Docker or direct)"
     }
   }
