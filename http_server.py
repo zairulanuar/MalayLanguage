@@ -2,7 +2,7 @@
 """
 HTTP Server wrapper for MalayLanguage MCP Server
 
-Provides HTTP/SSE streaming support at /mcp endpoint.
+Provides HTTP/SSE streaming support at /sse endpoint.
 """
 
 import asyncio
@@ -11,31 +11,15 @@ import os
 from typing import Any
 
 import uvicorn
-from mcp.server.sse import sse_server
+from mcp.server.sse import SseServerTransport
 from starlette.applications import Starlette
 from starlette.routing import Route
-from starlette.responses import JSONResponse
-from sse_starlette import EventSourceResponse
+from starlette.responses import JSONResponse, PlainTextResponse
 
 from server import app as mcp_app
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("malaylanguage-http")
-
-
-async def handle_sse(request):
-    """Handle SSE connections for MCP protocol."""
-    async with sse_server() as (read_stream, write_stream):
-        await mcp_app.run(
-            read_stream, 
-            write_stream, 
-            mcp_app.create_initialization_options()
-        )
-
-
-async def handle_messages(request):
-    """Handle MCP messages over HTTP."""
-    return EventSourceResponse(handle_sse(request))
 
 
 async def health_check(request):
@@ -52,17 +36,36 @@ async def root_handler(request):
     return JSONResponse({
         "service": "MalayLanguage MCP Server",
         "version": "1.0.0",
-        "mcp_endpoint": "/mcp",
+        "mcp_endpoint": "/sse",
+        "post_endpoint": "/messages",
         "health_endpoint": "/health",
         "documentation": "https://github.com/zairulanuar/MalayLanguage"
     })
+
+
+async def handle_sse(request):
+    """Handle SSE connections for MCP protocol."""
+    sse = SseServerTransport("/messages")
+    async with sse.connect_sse(
+        request.scope, request.receive, request._send
+    ) as (read_stream, write_stream):
+        await mcp_app.run(read_stream, write_stream, mcp_app.create_initialization_options())
+    return PlainTextResponse("SSE connection closed")
+
+
+async def handle_post_messages(request):
+    """Handle POST messages for MCP protocol."""
+    # This is a simpler approach - create transport per request
+    sse = SseServerTransport("/messages")
+    return await sse.handle_post_message(request)
 
 
 # Create Starlette app
 routes = [
     Route("/", endpoint=root_handler, methods=["GET"]),
     Route("/health", endpoint=health_check, methods=["GET"]),
-    Route("/mcp", endpoint=handle_messages, methods=["GET", "POST"]),
+    Route("/sse", endpoint=handle_sse, methods=["GET"]),
+    Route("/messages", endpoint=handle_post_messages, methods=["POST"]),
 ]
 
 http_app = Starlette(routes=routes)

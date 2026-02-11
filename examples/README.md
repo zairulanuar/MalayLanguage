@@ -23,7 +23,7 @@ This directory contains example configuration files for using the MalayLanguage 
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-app.railway.app/mcp",
+      "url": "https://your-app.railway.app/sse",
       "transport": "http"
     }
   }

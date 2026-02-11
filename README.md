@@ -28,7 +28,7 @@ A Model Context Protocol (MCP) server for superb Malay language processing, powe
 ### Transport Support
 
 - **stdio** - Standard input/output for local integration
-- **HTTP/SSE** - Streamable HTTP server at `/mcp` endpoint
+- **HTTP/SSE** - Streamable HTTP server at `/sse` endpoint
 
 ## Installation
 
@@ -49,7 +49,7 @@ See the complete guide: **[DEPLOYMENT.md](DEPLOYMENT.md)**
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-deployed-app.com/mcp",
+      "url": "https://your-deployed-app.com/sse",
       "transport": "http"
     }
   }
@@ -100,7 +100,7 @@ python server.py
 python http_server.py
 ```
 
-The server will start on `http://0.0.0.0:8000` with the MCP endpoint at `/mcp`.
+The server will start on `http://0.0.0.0:8000` with the MCP endpoint at `/sse`.
 
 You can specify custom host and port:
 ```bash
@@ -132,7 +132,7 @@ Add the server to your MCP configuration file:
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-deployed-app.com/mcp",
+      "url": "https://your-deployed-app.com/sse",
       "transport": "http"
     }
   }
@@ -161,7 +161,7 @@ Add the server to your MCP configuration file:
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-deployed-app.com/mcp",
+      "url": "https://your-deployed-app.com/sse",
       "transport": "http",
       "disabled": false,
       "alwaysAllow": []
@@ -203,7 +203,7 @@ Add the server to your MCP configuration file:
 
 For HTTP-based clients, point to:
 ```
-http://localhost:8000/mcp
+http://localhost:8000/sse
 ```
 
 ## Example Usage

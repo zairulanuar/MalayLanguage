@@ -61,7 +61,7 @@ After deployment, Railway provides a URL like: `https://malaylanguage-mcp-produc
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-app.railway.app/mcp",
+      "url": "https://your-app.railway.app/sse",
       "transport": "http"
     }
   }
@@ -93,7 +93,7 @@ Render provides a URL like: `https://malaylanguage-mcp.onrender.com`
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://malaylanguage-mcp.onrender.com/mcp",
+      "url": "https://malaylanguage-mcp.onrender.com/sse",
       "transport": "http"
     }
   }
@@ -142,7 +142,7 @@ fly status
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://malaylanguage-mcp.fly.dev/mcp",
+      "url": "https://malaylanguage-mcp.fly.dev/sse",
       "transport": "http"
     }
   }
@@ -174,7 +174,7 @@ The server will be available at `http://localhost:8000`
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "http://localhost:8000/mcp",
+      "url": "http://localhost:8000/sse",
       "transport": "http"
     }
   }
@@ -236,7 +236,7 @@ curl http://localhost:8000/health
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "http://localhost:8000/mcp",
+      "url": "http://localhost:8000/sse",
       "transport": "http"
     }
   }
@@ -261,7 +261,7 @@ Add the remote server configuration:
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-deployed-app.com/mcp",
+      "url": "https://your-deployed-app.com/sse",
       "transport": "http"
     }
   }
@@ -274,13 +274,13 @@ Restart Claude Desktop.
 
 ### VS Code / Cursor
 
-Create or edit `.vscode/mcp.json` in your project:
+Create or edit `.vscode/sse.json` in your project:
 
 ```json
 {
   "mcpServers": {
     "malaylanguage": {
-      "url": "https://your-deployed-app.com/mcp",
+      "url": "https://your-deployed-app.com/sse",
       "transport": "http",
       "disabled": false,
       "alwaysAllow": []
@@ -303,7 +303,7 @@ Use the MCP SDK to connect to the HTTP endpoint:
 from mcp.client.http import HttpClient
 
 async def main():
-    async with HttpClient("https://your-deployed-app.com/mcp") as client:
+    async with HttpClient("https://your-deployed-app.com/sse") as client:
         # List available tools
         tools = await client.list_tools()
         
@@ -326,7 +326,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
 
 const transport = new SSEClientTransport(
-  "https://your-deployed-app.com/mcp"
+  "https://your-deployed-app.com/sse"
 );
 const client = new Client({ name: "my-app", version: "1.0.0" }, {});
 
@@ -378,7 +378,7 @@ Once deployed, your server provides these endpoints:
 |----------|--------|-------------|
 | `/` | GET | Service information |
 | `/health` | GET | Health check for monitoring |
-| `/mcp` | GET/POST | MCP protocol endpoint (SSE) |
+| `/sse` | GET/POST | MCP protocol endpoint (SSE) |
 
 **Test the endpoints:**
 
@@ -401,7 +401,7 @@ curl https://your-app.com/health
 **Solutions**:
 1. Verify the server is running: `curl https://your-app.com/health`
 2. Check firewall rules and port accessibility
-3. Ensure the URL includes `/mcp` endpoint
+3. Ensure the URL includes `/sse` endpoint
 4. Check server logs for errors
 
 ### Cold Start Delays
