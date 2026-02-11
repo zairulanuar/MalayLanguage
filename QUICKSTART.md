@@ -4,7 +4,21 @@ This guide shows you how to get the MalayLanguage MCP server running remotely in
 
 ## Step 1: Deploy (2 minutes)
 
-### Option A: Railway (Easiest)
+### Option A: Hugging Face Spaces (Free & Easy) 🆕
+
+1. Go to [Hugging Face Spaces](https://huggingface.co/spaces)
+2. Click "Create new Space"
+3. Choose:
+   - **Name**: `malaylanguage-mcp`
+   - **Space SDK**: Docker
+   - **Hardware**: CPU Basic (free)
+4. Upload files (see [HF_SPACES_DEPLOYMENT.md](HF_SPACES_DEPLOYMENT.md) for details)
+5. Wait for build (5-10 minutes)
+6. Copy your URL: `https://YOUR_USERNAME-malaylanguage-mcp.hf.space`
+
+**Note**: First request may be slow (30-90s) as models download. Free tier sleeps after 48h.
+
+### Option B: Railway (Fast)
 
 1. Click: [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/malaylanguage)
 2. Sign in with GitHub
@@ -12,7 +26,7 @@ This guide shows you how to get the MalayLanguage MCP server running remotely in
 4. Wait for deployment to complete
 5. Copy your URL: `https://your-app.up.railway.app`
 
-### Option B: Docker Compose (Self-hosted)
+### Option C: Docker Compose (Self-hosted)
 
 ```bash
 git clone https://github.com/zairulanuar/MalayLanguage.git

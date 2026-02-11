@@ -4,6 +4,7 @@ This directory contains example configuration files for using the MalayLanguage 
 
 ## Files
 
+- **hf-spaces-config.json** - 🆕 **Hugging Face Spaces**: Free ML-optimized hosting configuration
 - **remote-http-config.json** - ⭐ **Recommended**: Connect to a remote server without local installation
 - **vscode-mcp.json** - Configuration for VS Code or Cursor editors (local)
 - **claude-desktop-config.json** - Configuration for Claude Desktop app (local)
@@ -11,11 +12,37 @@ This directory contains example configuration files for using the MalayLanguage 
 
 ## Usage
 
-### Remote HTTP Connection (No Local Installation) ⭐
+### Hugging Face Spaces (Free & Easy) 🆕
+
+**Perfect for**: Demos, personal use, ML/NLP workloads
+
+1. Deploy the server to Hugging Face Spaces - see [HF_SPACES_DEPLOYMENT.md](../HF_SPACES_DEPLOYMENT.md)
+2. Get your Space URL (e.g., `https://YOUR_USERNAME-malaylanguage-mcp.hf.space`)
+3. Use the HF Spaces configuration:
+
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://YOUR_USERNAME-malaylanguage-mcp.hf.space/sse",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+See `hf-spaces-config.json` for complete examples including private spaces.
+
+**Notes**:
+- First request may be slow (30-90s for model download)
+- Free tier sleeps after 48h inactivity
+- Upgrade for always-on and better performance
+
+### Remote HTTP Connection (Production) ⭐
 
 **This is the recommended approach** - deploy the server once and connect from any client.
 
-1. Deploy the server to a cloud platform (Railway, Render, Fly.io) - see [DEPLOYMENT.md](../DEPLOYMENT.md)
+1. Deploy the server to a cloud platform (Railway, Render, Fly.io, HF Spaces) - see [DEPLOYMENT.md](../DEPLOYMENT.md)
 2. Get your server URL (e.g., `https://your-app.railway.app`)
 3. Use the remote HTTP configuration:
 
@@ -24,7 +51,7 @@ This directory contains example configuration files for using the MalayLanguage 
   "mcpServers": {
     "malaylanguage": {
       "url": "https://your-app.railway.app/sse",
-      "transport": "http"
+      "transport": "sse"
     }
   }
 }
