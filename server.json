@@ -1,0 +1,33 @@
+{
+  "name": "malaylanguage-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for Malay language processing using Malaya library",
+  "author": "Zairul Anuar",
+  "homepage": "https://github.com/zairulanuar/MalayLanguage",
+  "license": "MIT",
+  "capabilities": {
+    "tools": [
+      "detect_language",
+      "normalize_malay",
+      "correct_spelling",
+      "apply_glossary",
+      "rewrite_style",
+      "translate",
+      "term_lookup"
+    ],
+    "transport": [
+      "stdio",
+      "http"
+    ]
+  },
+  "runtime": {
+    "type": "python",
+    "version": ">=3.10",
+    "command": "python",
+    "args": ["server.py"]
+  },
+  "http": {
+    "endpoint": "/mcp",
+    "port": 8000
+  }
+}
