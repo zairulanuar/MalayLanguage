@@ -4,11 +4,33 @@ This directory contains example configuration files for using the MalayLanguage 
 
 ## Files
 
-- **vscode-mcp.json** - Configuration for VS Code or Cursor editors
-- **claude-desktop-config.json** - Configuration for Claude Desktop app
+- **remote-http-config.json** - ⭐ **Recommended**: Connect to a remote server without local installation
+- **vscode-mcp.json** - Configuration for VS Code or Cursor editors (local)
+- **claude-desktop-config.json** - Configuration for Claude Desktop app (local)
 - **docker-config.json** - Configuration for Docker-based deployments
 
 ## Usage
+
+### Remote HTTP Connection (No Local Installation) ⭐
+
+**This is the recommended approach** - deploy the server once and connect from any client.
+
+1. Deploy the server to a cloud platform (Railway, Render, Fly.io) - see [DEPLOYMENT.md](../DEPLOYMENT.md)
+2. Get your server URL (e.g., `https://your-app.railway.app`)
+3. Use the remote HTTP configuration:
+
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://your-app.railway.app/mcp",
+      "transport": "http"
+    }
+  }
+}
+```
+
+See `remote-http-config.json` for complete examples.
 
 ### VS Code / Cursor
 
