@@ -11,6 +11,7 @@ A Model Context Protocol (MCP) server for superb Malay language processing, powe
 - **Fly.io**: See [DEPLOYMENT.md](DEPLOYMENT.md#flyio)
 - **Docker Compose**: `docker-compose up -d` (see [DEPLOYMENT.md](DEPLOYMENT.md#docker-compose))
 
+👉 **5-minute quickstart**: [QUICKSTART.md](QUICKSTART.md)  
 👉 **Full deployment guide**: [DEPLOYMENT.md](DEPLOYMENT.md)  
 👉 **Testing guide**: [TESTING.md](TESTING.md)
 
