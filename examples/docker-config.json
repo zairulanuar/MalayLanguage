@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "malaylanguage-docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "ghcr.io/zairulanuar/malaylanguage:latest"
+      ]
+    },
+    "malaylanguage-http": {
+      "url": "http://localhost:8000/mcp",
+      "transport": "http"
+    }
+  }
+}

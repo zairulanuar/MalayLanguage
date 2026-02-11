@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "command": "python",
+      "args": [
+        "/Users/your-username/path/to/MalayLanguage/server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/your-username/path/to/MalayLanguage"
+      }
+    }
+  }
+}
