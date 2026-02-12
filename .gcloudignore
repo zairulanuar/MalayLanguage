@@ -46,6 +46,8 @@ tests/
 .gitattributes
 
 # Documentation
+# Note: Documentation files are not needed at runtime
+# Only README.md is included for container registry display
 *.md
 !README.md
 docs/

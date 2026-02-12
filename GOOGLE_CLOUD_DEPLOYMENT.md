@@ -93,7 +93,7 @@ gcloud run deploy malaylanguage-mcp \
   --cpu 1 \
   --min-instances 0 \
   --max-instances 10 \
-  --set-env-vars PYTHONUNBUFFERED=1,PORT=8000,HOST=0.0.0.0
+  --set-env-vars PYTHONUNBUFFERED=1,PORT=8000,HOST=0.0.0.0,MALAYA_CACHE=/tmp/.malaya
 ```
 
 This command will:
@@ -247,8 +247,10 @@ env_variables:
 |----------|-------------|---------|
 | `HOST` | Server bind address | `0.0.0.0` |
 | `PORT` | Server port | `8000` |
-| `MALAYA_CACHE` | Model cache directory | `~/.malaya` |
+| `MALAYA_CACHE` | Model cache directory | `~/.malaya` (local), `/tmp/.malaya` (cloud) |
 | `PYTHONUNBUFFERED` | Disable Python buffering | `1` |
+
+**Note:** For Cloud Run and App Engine, use `/tmp/.malaya` for `MALAYA_CACHE` since these platforms have ephemeral filesystems.
 
 ### Memory and CPU Settings
 

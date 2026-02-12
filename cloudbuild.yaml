@@ -47,12 +47,12 @@ steps:
       - '--max-instances'
       - '10'
       - '--set-env-vars'
-      - 'PYTHONUNBUFFERED=1,PORT=8000,HOST=0.0.0.0'
+      - 'PYTHONUNBUFFERED=1,PORT=8000,HOST=0.0.0.0,MALAYA_CACHE=/tmp/.malaya'
 
 images:
   - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
   - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:latest'
 
 options:
-  machineType: 'N1_HIGHCPU_8'
+  machineType: 'E2_HIGHCPU_4'
   logging: CLOUD_LOGGING_ONLY
