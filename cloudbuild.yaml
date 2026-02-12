@@ -1,43 +1,42 @@
 steps:
-  # Build the Docker image
+  # Build the Docker image - FIXED: Use Artifact Registry (AR) not Container Registry (gcr.io)
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
       - '-t'
-      - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:$COMMIT_SHA'
       - '-t'
-      - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:latest'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:latest'
       - '-f'
       - 'Dockerfile'
       - '.'
 
-  # Push the Docker image to Container Registry
+  # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:$COMMIT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:latest'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:latest'
 
-  # Deploy to Cloud Run
+  # Deploy to Cloud Run - FIXED: Use same AR path, REMOVED --port, REMOVED redundant PORT env var
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'malaylanguage-mcp'
+      - 'malaylanguage'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:$COMMIT_SHA'
       - '--region'
-      - 'us-central1'
+      - '$_REGION'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-      - '--port'
-      - '8080'
+      # REMOVED: '--port', '8080' - Cloud Run injects PORT automatically
       - '--memory'
       - '2Gi'
       - '--cpu'
@@ -47,7 +46,7 @@ steps:
       - '--max-instances'
       - '10'
       - '--set-env-vars'
-      - 'PYTHONUNBUFFERED=1,PORT=8080,HOST=0.0.0.0,MALAYA_CACHE=/tmp/.malaya'
+      - 'PYTHONUNBUFFERED=1,MALAYA_CACHE=/tmp/.malaya'  # REMOVED PORT and HOST (your code handles this)
       - '--timeout'
       - '900'
       - '--concurrency'
@@ -56,9 +55,12 @@ steps:
       - 'tcpSocket.port=8080,initialDelaySeconds=60,periodSeconds=10,timeoutSeconds=5,failureThreshold=24'
 
 images:
-  - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:latest'
+  - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:$COMMIT_SHA'
+  - '$_REGION-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/malaylanguage/malaylanguage:latest'
 
 options:
   machineType: 'E2_HIGHCPU_4'
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _REGION: asia-southeast3  # Define your region here
