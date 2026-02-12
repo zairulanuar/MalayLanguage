@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "malaylanguage-hf-spaces": {
+      "url": "https://YOUR_USERNAME-malaylanguage-mcp.hf.space/sse",
+      "transport": "sse",
+      "description": "MalayLanguage MCP Server on Hugging Face Spaces (Free tier)",
+      "disabled": false
+    },
+    "malaylanguage-hf-spaces-private": {
+      "url": "https://YOUR_USERNAME-malaylanguage-mcp.hf.space/sse",
+      "transport": "sse",
+      "description": "Private HF Space with authentication",
+      "headers": {
+        "Authorization": "Bearer YOUR_HF_TOKEN"
+      },
+      "disabled": true
+    },
+    "malaylanguage-hf-spaces-staging": {
+      "url": "https://YOUR_USERNAME-malaylanguage-mcp-staging.hf.space/sse",
+      "transport": "sse",
+      "description": "Staging environment on HF Spaces",
+      "disabled": true
+    }
+  }
+}

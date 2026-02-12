@@ -2,6 +2,21 @@
 
 A Model Context Protocol (MCP) server for superb Malay language processing, powered by the [Malaya](https://github.com/huseinzol05/malaya) library. This server provides advanced Natural Language Processing (NLP) tools for Bahasa Malaysia (BM).
 
+## 🚀 Quick Start - No Installation Required
+
+**Want to use this without installing locally?** Deploy to the cloud in minutes:
+
+- 🆕 **Hugging Face Spaces**: [Deploy to HF Spaces](HF_SPACES_DEPLOYMENT.md) (Free, ML-optimized)
+- **Railway**: [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/malaylanguage)
+- **Render**: See [DEPLOYMENT.md](DEPLOYMENT.md#render)
+- **Fly.io**: See [DEPLOYMENT.md](DEPLOYMENT.md#flyio)
+- **Docker Compose**: `docker-compose up -d` (see [DEPLOYMENT.md](DEPLOYMENT.md#docker-compose))
+
+👉 **5-minute quickstart**: [QUICKSTART.md](QUICKSTART.md)  
+👉 **Full deployment guide**: [DEPLOYMENT.md](DEPLOYMENT.md)  
+👉 **HF Spaces guide**: [HF_SPACES_DEPLOYMENT.md](HF_SPACES_DEPLOYMENT.md) 🆕  
+👉 **Testing guide**: [TESTING.md](TESTING.md)
+
 ## Features
 
 ### Available Tools
@@ -17,16 +32,41 @@ A Model Context Protocol (MCP) server for superb Malay language processing, powe
 ### Transport Support
 
 - **stdio** - Standard input/output for local integration
-- **HTTP/SSE** - Streamable HTTP server at `/mcp` endpoint
+- **HTTP/SSE** - Streamable HTTP server at `/sse` endpoint
 
 ## Installation
+
+### Option 1: Remote Deployment (No Local Installation) ☁️
+
+Deploy the server to a cloud platform and connect via HTTP. **This is the recommended approach if you don't want to install anything locally.**
+
+See the complete guide: **[DEPLOYMENT.md](DEPLOYMENT.md)**
+
+**Quick options:**
+- 🆕 **Hugging Face Spaces**: Free, ML-optimized hosting - [Guide](HF_SPACES_DEPLOYMENT.md)
+- **Railway**: One-click deploy, 500 hours free monthly
+- **Render**: Auto-deploy from GitHub, 750 hours free monthly  
+- **Fly.io**: Edge deployment, 3 VMs free
+- **Docker Compose**: `docker-compose up -d` for local hosting
+
+**Connect your app:**
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://your-deployed-app.com/sse",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+### Option 2: Local Installation 💻
 
 ### Prerequisites
 
 - Python 3.10 or higher
 - pip package manager
-
-### Local Installation
 
 1. Clone the repository:
 ```bash
@@ -65,7 +105,7 @@ python server.py
 python http_server.py
 ```
 
-The server will start on `http://0.0.0.0:8000` with the MCP endpoint at `/mcp`.
+The server will start on `http://0.0.0.0:8000` with the MCP endpoint at `/sse`.
 
 You can specify custom host and port:
 ```bash
@@ -91,6 +131,20 @@ docker run -p 8000:8000 malaylanguage-mcp python http_server.py
 Add the server to your MCP configuration file:
 
 **For Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):**
+
+**Remote HTTP connection (recommended):**
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://your-deployed-app.com/sse",
+      "transport": "http"
+    }
+  }
+}
+```
+
+**Local stdio connection:**
 ```json
 {
   "mcpServers": {
@@ -106,6 +160,22 @@ Add the server to your MCP configuration file:
 ```
 
 **For VS Code / Cursor (`mcp.json`):**
+
+**Remote HTTP connection (recommended):**
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://your-deployed-app.com/sse",
+      "transport": "http",
+      "disabled": false,
+      "alwaysAllow": []
+    }
+  }
+}
+```
+
+**Local stdio connection:**
 ```json
 {
   "mcpServers": {
@@ -138,7 +208,7 @@ Add the server to your MCP configuration file:
 
 For HTTP-based clients, point to:
 ```
-http://localhost:8000/mcp
+http://localhost:8000/sse
 ```
 
 ## Example Usage

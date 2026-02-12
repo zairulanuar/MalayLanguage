@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: malaylanguage-mcp-server
+    runtime: docker
+    plan: starter
+    region: oregon
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerCommand: python http_server.py
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: HOST
+        value: 0.0.0.0
+      - key: PYTHONUNBUFFERED
+        value: 1
