@@ -19,6 +19,18 @@ COPY server.py .
 COPY http_server.py .
 COPY server.json .
 
+# ===== ADD THIS BLOCK =====
+# Pre-download Malaya models (run as root)
+RUN python -c "import malaya; \
+    print('Downloading translation model...'); \
+    malaya.translation.huggingface(model='mesolitica/translation-t5-small-standard-bahasa-cased', force_check=True); \
+    print('Downloading spelling correction model...'); \
+    malaya.spelling_correction.transformer(model='mesolitica/bert-tiny-standard-bahasa-cased', force_check=True); \
+    print('Downloading normalizer model...'); \
+    malaya.normalizer.transformer(model='mesolitica/normalizer-t5-small-standard-bahasa-cased', force_check=True); \
+    print('All models downloaded successfully!')" || echo "Model pre-download failed, will download at runtime"
+# ===== END OF BLOCK =====
+
 # Create directory for model cache and set correct permissions
 RUN mkdir -p /tmp/.malaya && \
     chmod 777 /tmp/.malaya
