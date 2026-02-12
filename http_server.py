@@ -44,6 +44,11 @@ async def health_check(request):
         }, status_code=500)
 
 
+async def healthz(request):
+    """Simple health check endpoint."""
+    return PlainTextResponse("ok")
+
+
 async def root_handler(request):
     """Root endpoint with service information."""
     return JSONResponse({
@@ -125,6 +130,7 @@ async def handle_tool_execute(request):
 routes = [
     Route("/", endpoint=root_handler, methods=["GET"]),
     Route("/health", endpoint=health_check, methods=["GET"]),
+    Route("/healthz", endpoint=healthz, methods=["GET"]),
     Route("/sse", endpoint=handle_sse, methods=["GET"]),
     Route("/messages", endpoint=handle_post_messages, methods=["POST"]),
     Route("/tools/execute", endpoint=handle_tool_execute, methods=["POST"]),
@@ -143,11 +149,8 @@ def start_server(host: str = "0.0.0.0", port: int = 8000):
 
 
 if __name__ == "__main__":
-    import sys
     import os
     
-    # Support environment variables for deployment platforms
-    host = os.getenv("HOST", sys.argv[1] if len(sys.argv) > 1 else "0.0.0.0")
-    port = int(os.getenv("PORT", sys.argv[2] if len(sys.argv) > 2 else "8000"))
-    
-    start_server(host, port)
+    port = int(os.environ.get("PORT", "8080"))
+    logger.info("Starting server on 0.0.0.0:%s", port)
+    uvicorn.run(http_app, host="0.0.0.0", port=port)
