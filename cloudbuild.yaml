@@ -48,6 +48,10 @@ steps:
       - '10'
       - '--set-env-vars'
       - 'PYTHONUNBUFFERED=1,PORT=8080,HOST=0.0.0.0,MALAYA_CACHE=/tmp/.malaya'
+      - '--timeout'
+      - '900'
+      - '--concurrency'
+      - '10'
 
 images:
   - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'

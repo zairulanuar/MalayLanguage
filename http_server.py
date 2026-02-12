@@ -28,11 +28,20 @@ logger = logging.getLogger("malaylanguage-http")
 
 async def health_check(request):
     """Health check endpoint for deployment platforms."""
-    return JSONResponse({
-        "status": "healthy",
-        "service": "malaylanguage-mcp-server",
-        "version": "1.0.0"
-    })
+    try:
+        # Quick health check that doesn't load models
+        return JSONResponse({
+            "status": "healthy",
+            "service": "malaylanguage-mcp-server",
+            "version": "1.0.0",
+            "timestamp": asyncio.get_event_loop().time()
+        })
+    except Exception as e:
+        logger.error(f"Health check error: {e}")
+        return JSONResponse({
+            "status": "unhealthy",
+            "error": str(e)
+        }, status_code=500)
 
 
 async def root_handler(request):
@@ -129,6 +138,7 @@ def start_server(host: str = "0.0.0.0", port: int = 8000):
     logger.info(f"Starting MalayLanguage MCP HTTP server on {host}:{port}")
     logger.info(f"MCP SSE endpoint available at http://{host}:{port}/sse")
     logger.info(f"Health check available at http://{host}:{port}/health")
+    logger.info("Server initialization complete - ready to accept connections")
     uvicorn.run(http_app, host=host, port=port)
 
 

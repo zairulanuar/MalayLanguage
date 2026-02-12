@@ -31,4 +31,4 @@ ENV MALAYA_CACHE=/tmp/.malaya
 ENV PORT=8080
 
 # Default command (HTTP mode for Cloud Run)
-CMD ["python", "http_server.py"]
+CMD python http_server.py
