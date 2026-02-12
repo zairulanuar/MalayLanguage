@@ -19,8 +19,14 @@ COPY server.py .
 COPY http_server.py .
 COPY server.json .
 
-# Create directory for model cache using /tmp (writable in Cloud Run)
-RUN mkdir -p /tmp/.malaya
+# Create directory for model cache and set correct permissions
+RUN mkdir -p /tmp/.malaya && \
+    chmod 777 /tmp/.malaya
+
+# Create non-root user and switch to it
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /app /tmp/.malaya
+USER appuser
 
 # Expose port for HTTP server
 EXPOSE 8080
