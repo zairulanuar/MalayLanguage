@@ -19,15 +19,15 @@ COPY server.py .
 COPY http_server.py .
 COPY server.json .
 
-# Create directory for model cache
-RUN mkdir -p /root/.malaya
+# Create directory for model cache using /tmp (writable in Cloud Run)
+RUN mkdir -p /tmp/.malaya
 
 # Expose port for HTTP server
 EXPOSE 8080
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV MALAYA_CACHE=/root/.malaya
+ENV MALAYA_CACHE=/tmp/.malaya
 ENV PORT=8080
 
 # Default command (HTTP mode for Cloud Run)
