@@ -17,6 +17,10 @@ from starlette.routing import Route
 from starlette.responses import JSONResponse, PlainTextResponse
 
 from server import app as mcp_app
+from server import (
+    detect_language, normalize_malay, correct_spelling, 
+    apply_glossary, rewrite_style, translate, term_lookup
+)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("malaylanguage-http")
@@ -60,12 +64,61 @@ async def handle_post_messages(request):
     return await sse.handle_post_message(request)
 
 
+async def handle_tool_execute(request):
+    """Execute a tool directly via HTTP POST."""
+    try:
+        data = await request.json()
+        name = data.get("name")
+        arguments = data.get("arguments", {})
+        
+        if not name:
+            return JSONResponse({"error": "Tool name is required"}, status_code=400)
+            
+        result = []
+        if name == "detect_language":
+            result = await detect_language(arguments.get("text", ""))
+        elif name == "normalize_malay":
+            result = await normalize_malay(arguments.get("text", ""))
+        elif name == "correct_spelling":
+            result = await correct_spelling(arguments.get("text", ""))
+        elif name == "apply_glossary":
+            result = await apply_glossary(arguments.get("term", ""))
+        elif name == "rewrite_style":
+            result = await rewrite_style(
+                arguments.get("text", ""),
+                arguments.get("style", "formal")
+            )
+        elif name == "translate":
+            result = await translate(
+                arguments.get("text", ""),
+                arguments.get("source_lang", "ms"),
+                arguments.get("target_lang", "en")
+            )
+        elif name == "term_lookup":
+            result = await term_lookup(arguments.get("term", ""))
+        else:
+            return JSONResponse({"error": f"Unknown tool: {name}"}, status_code=400)
+            
+        # Result is list[TextContent]. Convert to JSON.
+        return JSONResponse({
+            "tool": name,
+            "result": [
+                {"type": c.type, "text": c.text} for c in result
+            ]
+        })
+        
+    except Exception as e:
+        logger.error(f"Tool execution error: {e}")
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
 # Create Starlette app
 routes = [
     Route("/", endpoint=root_handler, methods=["GET"]),
     Route("/health", endpoint=health_check, methods=["GET"]),
     Route("/sse", endpoint=handle_sse, methods=["GET"]),
     Route("/messages", endpoint=handle_post_messages, methods=["POST"]),
+    Route("/tools/execute", endpoint=handle_tool_execute, methods=["POST"]),
 ]
 
 http_app = Starlette(routes=routes)
