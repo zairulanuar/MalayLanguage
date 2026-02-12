@@ -19,7 +19,7 @@ This guide explains how to deploy and connect to the MalayLanguage MCP Server **
 
 The fastest way to use this MCP server remotely:
 
-1. **Deploy to a cloud platform** (Hugging Face Spaces, Railway, Render, or Fly.io)
+1. **Deploy to a cloud platform** (Google Cloud, Hugging Face Spaces, Railway, Render, or Fly.io)
 2. **Get your server URL** (e.g., `https://your-app.railway.app`)
 3. **Configure your MCP client** to use the HTTP endpoint
 
@@ -29,7 +29,58 @@ The fastest way to use this MCP server remotely:
 
 ### Cloud Platforms
 
-#### Hugging Face Spaces (Free & Easy) 🆕
+#### Google Cloud (Cloud Run & App Engine) 🆕
+
+Google Cloud Platform offers robust, scalable deployment with automatic scaling and a generous free tier.
+
+**Advantages:**
+- ✅ Serverless with Cloud Run (automatic scaling to zero)
+- ✅ Free tier: 2 million requests/month
+- ✅ Global infrastructure
+- ✅ Production-grade reliability
+- ✅ Easy CI/CD integration
+
+**Quick Deploy:**
+
+```bash
+# Install gcloud CLI
+curl https://sdk.cloud.google.com | bash
+
+# Login and set project
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+
+# Deploy to Cloud Run (one command!)
+gcloud run deploy malaylanguage-mcp \
+  --source . \
+  --region us-central1 \
+  --platform managed \
+  --allow-unauthenticated \
+  --port 8000 \
+  --memory 1Gi \
+  --set-env-vars MALAYA_CACHE=/tmp/.malaya
+```
+
+Your service will be available at: `https://malaylanguage-mcp-XXXXX.run.app`
+
+**Configure Your Client:**
+
+```json
+{
+  "mcpServers": {
+    "malaylanguage": {
+      "url": "https://malaylanguage-mcp-XXXXX.run.app/sse",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+📖 **Complete guide**: [GOOGLE_CLOUD_DEPLOYMENT.md](GOOGLE_CLOUD_DEPLOYMENT.md)
+
+---
+
+#### Hugging Face Spaces (Free & Easy)
 
 Hugging Face Spaces offers free hosting with Docker support, perfect for ML/NLP applications.
 
@@ -495,9 +546,11 @@ curl https://your-app.com/health
 
 | Platform | Free Tier | Paid Tier | Persistent Storage |
 |----------|-----------|-----------|-------------------|
+| Google Cloud Run | 2M requests/month | $0.40/M requests | ⚠️ No (ephemeral) |
 | Railway | 500h/month | $5+/month | ✅ Yes |
 | Render | 750h/month | $7+/month | ✅ Yes |
 | Fly.io | 3 VMs free | $0.02/GB-hr | ✅ Yes |
+| HF Spaces | Free CPU | $9-69/month | ✅ Yes |
 | Docker Local | ✅ Free | N/A | ✅ Yes |
 
 ---
