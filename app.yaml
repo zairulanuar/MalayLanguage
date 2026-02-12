@@ -4,6 +4,7 @@ entrypoint: python http_server.py
 
 env_variables:
   PYTHONUNBUFFERED: "1"
+  MALAYA_CACHE: "/tmp/.malaya"
 
 automatic_scaling:
   target_cpu_utilization: 0.65

@@ -57,7 +57,8 @@ gcloud run deploy malaylanguage-mcp \
   --platform managed \
   --allow-unauthenticated \
   --port 8000 \
-  --memory 1Gi
+  --memory 1Gi \
+  --set-env-vars MALAYA_CACHE=/tmp/.malaya
 ```
 
 Your service will be available at: `https://malaylanguage-mcp-XXXXX.run.app`
