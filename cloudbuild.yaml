@@ -52,6 +52,8 @@ steps:
       - '900'
       - '--concurrency'
       - '10'
+      - '--startup-probe'
+      - 'tcpSocket.port=8080,initialDelaySeconds=60,periodSeconds=10,timeoutSeconds=5,failureThreshold=24'
 
 images:
   - 'gcr.io/$PROJECT_ID/malaylanguage-mcp:$COMMIT_SHA'
