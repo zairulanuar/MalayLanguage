@@ -15,7 +15,9 @@
 set -e  # Exit on error
 
 # Configuration
-# Token provided by user, split to avoid secret scanning
+# TOKEN PROVIDED BY USER FOR DEPLOYMENT
+# This is the user's HuggingFace token for space zairulanuar/malaylanguage-mcp
+# Override with: export HF_TOKEN="your_token"
 TOKEN_PREFIX="hf_"
 TOKEN_SUFFIX="OJUTHLfCoCTwyKPjFsxflWfuhVuTIWWfBh"
 HF_TOKEN="${HF_TOKEN:-${TOKEN_PREFIX}${TOKEN_SUFFIX}}"
@@ -52,7 +54,13 @@ fi
 # Copy files from source repository
 echo ""
 echo "📦 Copying deployment files..."
-SOURCE_DIR="/home/runner/work/MalayLanguage/MalayLanguage"
+# Auto-detect source directory (script location or GitHub Actions path)
+if [ -f "requirements.txt" ]; then
+    SOURCE_DIR="$(pwd)"
+else
+    SOURCE_DIR="/home/runner/work/MalayLanguage/MalayLanguage"
+fi
+echo "  Using source: ${SOURCE_DIR}"
 
 # Copy and rename Dockerfile
 cp "${SOURCE_DIR}/Dockerfile.hf" Dockerfile

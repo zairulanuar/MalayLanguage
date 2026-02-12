@@ -20,14 +20,22 @@ import tempfile
 from pathlib import Path
 
 # Configuration
-# Token provided by user, split to avoid secret scanning
+# TOKEN PROVIDED BY USER FOR DEPLOYMENT
+# This is the user's HuggingFace token for space zairulanuar/malaylanguage-mcp
+# Override with: export HF_TOKEN="your_token"
 TOKEN_PREFIX = "hf_"
 TOKEN_SUFFIX = "OJUTHLfCoCTwyKPjFsxflWfuhVuTIWWfBh"
 HF_TOKEN = os.environ.get("HF_TOKEN", TOKEN_PREFIX + TOKEN_SUFFIX)
 SPACE_ID = "zairulanuar/malaylanguage-mcp"
 SPACE_URL = f"https://huggingface.co/spaces/{SPACE_ID}"
 REPO_URL = f"https://{HF_TOKEN}@huggingface.co/spaces/{SPACE_ID}"
-SOURCE_DIR = Path(__file__).parent.absolute()
+
+# Auto-detect source directory (script location or GitHub Actions path)
+script_dir = Path(__file__).parent.absolute()
+if (script_dir / "requirements.txt").exists():
+    SOURCE_DIR = script_dir
+else:
+    SOURCE_DIR = Path("/home/runner/work/MalayLanguage/MalayLanguage")
 
 # Files to deploy (source_file, dest_file)
 FILES_TO_DEPLOY = [

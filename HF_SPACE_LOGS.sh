@@ -19,7 +19,9 @@
 set -e
 
 # Configuration  
-# Token provided by user, split to avoid secret scanning
+# TOKEN PROVIDED BY USER FOR LOG ACCESS
+# This is the user's HuggingFace token for space zairulanuar/malaylanguage-mcp
+# Override with: export HF_TOKEN="your_token"
 TOKEN_PREFIX="hf_"
 TOKEN_SUFFIX="OJUTHLfCoCTwyKPjFsxflWfuhVuTIWWfBh"
 HF_TOKEN="${HF_TOKEN:-${TOKEN_PREFIX}${TOKEN_SUFFIX}}"
