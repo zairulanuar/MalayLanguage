@@ -28,9 +28,7 @@ EXPOSE 8000
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV MALAYA_CACHE=/root/.malaya
+ENV PORT=8080
 
-# Default command (stdio mode)
-CMD ["python", "server.py"]
-
-# To run HTTP server instead, use:
-# CMD ["python", "http_server.py"]
+# Default command (HTTP mode for Cloud Run)
+CMD ["python", "http_server.py"]
