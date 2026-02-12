@@ -23,7 +23,7 @@ COPY server.json .
 RUN mkdir -p /root/.malaya
 
 # Expose port for HTTP server
-EXPOSE 8000
+EXPOSE 8080
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
